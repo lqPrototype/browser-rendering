@@ -1,3 +1,7 @@
+> 引言：本文参考，极客时间【李兵】[浏览器工作原理与实践](https://time.geekbang.org/column/intro/100033601?tab=catalog)，意在总结，便于自己学习。
+
+
+
 ## 1 Chrome 的进程架构
 
 - **浏览器主进程** : 主要负责界面显示、用户交互、子进程管理，同时提供存储等功能.
@@ -17,7 +21,7 @@
 1. 渲染进程开始 HTML 解析和加载子资源
 1. HTML 解析完毕和加载子资源页面加载完成后会通知主进程页面加载完成
 
-   ![image.png](https://static001.geekbang.org/resource/image/92/5d/92d73c75308e50d5c06ad44612bcb45d.png){:height="50%" width="50%"}
+   ![image.png](https://static001.geekbang.org/resource/image/92/5d/92d73c75308e50d5c06ad44612bcb45d.png)
 
 ## 3. 渲染流水线
 
@@ -37,7 +41,7 @@
 1. 当所有的图块都光栅化之后，合成线程会发送**绘制**图块的命令给浏览器主进程
 1. 浏览器主进程然后会从 GPU 内存中取出位图**显示到页面**上
 
-   ![image.png](https://static001.geekbang.org/resource/image/97/37/975fcbf7f83cc20d216f3d68a85d0f37.png){:height="50%" width="50%"}
+   ![image.png](https://static001.geekbang.org/resource/image/97/37/975fcbf7f83cc20d216f3d68a85d0f37.png)
 
 ## 4. js 是如何影响 Dom 树的构建的？
 
@@ -52,7 +56,7 @@
 </html>
 ```
 
-![imgae.png](https://static001.geekbang.org/resource/image/8c/a5/8c7ba966cebb0050b81c0385ffb4f2a5.png){:height="50%" width="50%"}
+![imgae.png](https://static001.geekbang.org/resource/image/8c/a5/8c7ba966cebb0050b81c0385ffb4f2a5.png)
 
 4.2 JavaScript 是如何影响 DOM 生成的?
 
@@ -109,7 +113,7 @@ async 和 defer 虽然都是异步的，不过还有一些差异，使用 async 
 </html>
 ```
 
-![imgae.png](https://static001.geekbang.org/resource/image/76/1f/7641c75a80133e747aa2faae8f4c8d1f.png){:height="50%" width="50%"}
+![imgae.png](https://static001.geekbang.org/resource/image/76/1f/7641c75a80133e747aa2faae8f4c8d1f.png)
 
 ## 6. 为什么 css 动画比 js 高效？
 
