@@ -134,7 +134,11 @@ async 和 defer 虽然都是异步的，不过还有一些差异，使用 async 
 
 ```
 
-- **canvas** 模拟 gpu 绘制
 - **css** css 解析器
 - **express** 起一个服务，用来访问 html
 - **htmlparser2** html 解析器
+
+### 9. 参考
+- 极客时间【李兵】[浏览器工作原理与实践](https://time.geekbang.org/column/intro/100033601?tab=catalog)
+
+
