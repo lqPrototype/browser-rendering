@@ -55,6 +55,7 @@
   </body>
 </html>
 ```
+利用栈思想：
 
 ![imgae.png](https://static001.geekbang.org/resource/image/8c/a5/8c7ba966cebb0050b81c0385ffb4f2a5.png)
 
@@ -73,12 +74,7 @@
   </body>
 </html>
 
-备注：**JavaScript 文件的下载过程会阻塞 DOM 解析**, 执行影响会阻塞 DOM 解析。
-
-async 和 defer 虽然都是异步的，不过还有一些差异，使用 async 标志的脚本文件一旦加载完成，会立即执行；而使用了 defer 标记的脚本文件，需要在 DOMContentLoaded 事件之前执行。defer标记的多个脚本需要按顺序执行 而aysnc标记的多个脚本是无序的
 ```
-
-4.3 JavaScript 是如何影响 DOM 生成的?
 
 ```javascript
 <html>
@@ -95,25 +91,12 @@ async 和 defer 虽然都是异步的，不过还有一些差异，使用 async 
   </body>
 </html>
 
- JavaScript 会阻塞 DOM 生成，而样式文件又会阻塞 JavaScript 的执行
-```
-
-## 5. css 如何影响到 DOM 构建的？
-
-```javascript
-<html>
-<head>
-    <link href="theme.css" rel="stylesheet">
-</head>
-<body>
-    <div>geekbang com</div>
-    <script src='foo.js'></script>
-    <div>geekbang com</div>
-</body>
-</html>
 ```
 
 ![imgae.png](https://static001.geekbang.org/resource/image/76/1f/7641c75a80133e747aa2faae8f4c8d1f.png)
+
+
+备注：**JavaScript 文件的下载过程会阻塞 DOM 解析**, 执行影响会阻塞 DOM 解析。JavaScript 会阻塞 DOM 生成，而样式文件又会阻塞 JavaScript 的执行
 
 ## 6. 为什么 css 动画比 js 高效？
 
@@ -125,24 +108,15 @@ async 和 defer 虽然都是异步的，不过还有一些差异，使用 async 
 
 合成操作是在合成线程上完成的，这也就意味着在执行合成操作时，是不会影响到主线程执行的。这就是为什么经常主线程卡住了，但是 CSS 动画依然能执行的原因。
 
-## 7. 经典问题
-
-1.  减少重排重绘方法?
-2.  如果下载 CSS 文件阻塞了，会阻塞 DOM 树的合成吗？会阻塞页面的显示吗？
-3.  HTML 解析器是等整个 HTML 文档加载完成之后开始解析的，还是随着 HTML 文档边加载边解析的？
-
-### 8. 安装 npm 包
+### 7. 执行
 
 ```
- 客户端执行： node --experimental-modules request.mjs
+ client：客户端执行： node --experimental-modules request.mjs
+ server：模拟服务器： node index.js
 
 ```
 
-- **css** css 解析器
-- **express** 起一个服务，用来访问 html
-- **htmlparser2** html 解析器
-
-### 9. 参考
+### 8. 参考
 - 极客时间【李兵】[浏览器工作原理与实践](https://time.geekbang.org/column/intro/100033601?tab=catalog)
 
 
