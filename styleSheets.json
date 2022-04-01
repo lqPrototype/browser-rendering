@@ -1,0 +1,32 @@
+{
+  "cssRules": [
+    {
+      "type": "rule",
+      "selectors": ["*"],
+      "declarations": [
+        {
+          "type": "declaration",
+          "property": "padding",
+          "value": "0",
+          "position": {
+            "start": { "line": 3, "column": 9 },
+            "end": { "line": 3, "column": 19 }
+          }
+        },
+        {
+          "type": "declaration",
+          "property": "margin",
+          "value": "0",
+          "position": {
+            "start": { "line": 4, "column": 9 },
+            "end": { "line": 4, "column": 18 }
+          }
+        }
+      ],
+      "position": {
+        "start": { "line": 2, "column": 7 },
+        "end": { "line": 5, "column": 8 }
+      }
+    }
+  ]
+}
