@@ -5,6 +5,7 @@ import main from "./main.mjs";
 import network from "./network.mjs";
 import render from "./render.mjs";
 import gpu from "./gpu.mjs";
+import fs from 'fs'
 import {
   splitTiles,
   raster,
@@ -23,6 +24,7 @@ const loadingScripts = {};
 const host = "localhost";
 const port = 80;
 
+// 模拟出栈
 Array.prototype.top = function () {
   return this[this.length - 1];
 };
@@ -45,7 +47,6 @@ main.on("Load", () => console.log("Load", '页面加载完成'));
 // ======================== 网络进程 ======================
 network.on("request", (options) => {
   let request = http.request(options, (response) => {
-    // console.log('request data:', response)
     main.emit("prepareRender", response);
   });
   request.end();
@@ -68,9 +69,14 @@ render.on("commitNavigation", (response) => {
     const tokenStack = [document];
     // html解析器
     const parser = new htmlparser2.Parser({
+      onerror(error) {
+        console.log('error', error)
+      },
       onopentag(name, attributes = {}) {
         // 取栈顶元素作为父元素
         const parent = tokenStack.top();
+        console.log('onopentag', name)
+        // console.log('onopentag', { name, document })
         const element = {
           type: "element",
           tagName: name,
@@ -104,8 +110,8 @@ render.on("commitNavigation", (response) => {
        * @param {*} tagname
        */
       onclosetag(tagName) {
-        console.log('tagName:', tagName)
-        // b. css转stylesheet
+        console.log('onclosetag:', tagName)
+        // css转stylesheet
         switch (tagName) {
           case "style":
             const styleToken = tokenStack.top();
@@ -117,9 +123,11 @@ render.on("commitNavigation", (response) => {
             const href = linkToken.attributes.href;
             const options = { host, port, path: href };
             // 外链的css，发起网络请求，数据回来后push进stylesheet
-            const promise = network.fetchResource(options).then(({ body }) => {
+            const promise = network.fetchResource(options).then(({ headers, body }) => {
               delete loadingLinks[href];
+              // Accepts a CSS string and returns an AST object
               const cssAST = css.parse(body);
+              // console.log('cssAST', JSON.stringify(cssAST, null, 4))
               cssRules.push(...cssAST.stylesheet.rules);
             });
             loadingLinks[href] = promise;
@@ -161,7 +169,7 @@ render.on("commitNavigation", (response) => {
         }
         tokenStack.pop();
       },
-    });
+    }, {});
     // 开始接收响应体
     response.on("data", (buffer) => {
       // 渲染进程开始HTML解析和加载子资源
@@ -169,6 +177,8 @@ render.on("commitNavigation", (response) => {
       parser.write(buffer.toString());
     });
     response.on("end", () => {
+      console.log('styleSheets', fs.writeFileSync('./styleSheets.json', JSON.stringify({ cssRules })))
+      console.log('辅助数据：', JSON.stringify({ loadingLinks, loadingScripts }, null, 4))
       // 页面渲染，会受script的加载阻塞
       Promise.all(Object.values(loadingScripts)).then(() => {
         // html接收完毕后通知主进程确认导航
@@ -187,9 +197,9 @@ render.on("commitNavigation", (response) => {
         // 根据分层树生成绘制步骤并复合图层
         const paintSteps = compositeLayers(layers);
         //把绘制步骤交给渲染进程中的合成线程进行合成
-        // 合成线程会把图层划分为图块tile
+        //合成线程会把图层划分为图块tile
         const tiles = splitTiles(paintSteps);
-        // k. 合成线程会把分好的图块发给栅格化线程池
+        // 合成线程会把分好的图块发给栅格化线程池
         raster(tiles);
         // 触发DOMContentLoaded事件
         main.emit("DOMContentLoaded");
@@ -210,4 +220,4 @@ gpu.on("raster", (tile) => {
 
 
 // ======================== 开始 ======================
-main.emit("request", { host, port, path: "/load.html" });
+main.emit("request", { host, port, path: "/index.html" });

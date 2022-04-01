@@ -8,19 +8,19 @@ export function splitTiles(paintSteps) {
 }
 
 export function raster(tiles) {
-    // l. 栅格化线程会把图片tile转化成位图
+    // 栅格化线程会把图片tile转化成位图
     tiles.forEach((tile) => rasterThread(tile));
-    // n. 当所有的图块都光栅化之后，合成线程会发送绘制的命令给浏览器主进程
+    // 当所有的图块都光栅化之后，合成线程会发送绘制的命令给浏览器主进程
     main.emit("drawQuad");
 }
 
 export function rasterThread(tile) {
-    // m. 而其实栅格化线程在工作的时候，会把栅格化的工作交给gpu进程来完成
+    // 而其实栅格化线程在工作的时候，会把栅格化的工作交给gpu进程来完成
     gpu.emit("raster", tile);
 }
 
 export function compositeLayers(layers) {
-    // h. 合成线程会把分好的图块发给栅格化线程池，栅格化线程池会把图块tile转化为位图
+    // 合成线程会把分好的图块发给栅格化线程池，栅格化线程池会把图块tile转化为位图
     return layers.map((layout) => paint(layout));
 }
 
@@ -151,6 +151,7 @@ export function recalculateSyle(cssRules, element, parentComputedStyle = {}) {
             });
         }
     });
+    // console.log('element', element);
     // 递归，实现css样式的继承
     element.children.forEach((child) =>
         recalculateSyle(cssRules, child, element.computedSyle)
