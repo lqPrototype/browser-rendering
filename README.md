@@ -45,70 +45,17 @@
 
 ## 4. js 是如何影响 Dom 树的构建的？
 
-4.1 正常解析过程
-
-```javascript
-<html>
-  <body>
-    <div>1</div>
-    <div>test</div>
-  </body>
-</html>
-```
 利用栈思想：
 
 ![imgae.png](https://static001.geekbang.org/resource/image/8c/a5/8c7ba966cebb0050b81c0385ffb4f2a5.png)
 
 4.2 JavaScript 是如何影响 DOM 生成的?
 
-```javascript
-<html>
-  <body>
-    <div>1</div>
-    <script>
-      let div1 = document.getElementsByTagName('div')[0] div1.innerText =
-      'time.geekbang'
-    </script>
-    // <script type="text/javascript" src="foo.js"></script>
-    <div>test</div>
-  </body>
-</html>
-
-```
-
-```javascript
-<html>
-  <head>
-    <style src="theme.css"></style>
-  </head>
-  <body>
-    <div>1</div>
-    <script>
-      let div1 = document.getElementsByTagName('div')[0] div1.innerText =
-      'time.geekbang' //需要DOM div1.style.color = 'red' //需要CSSOM
-    </script>
-    <div>test</div>
-  </body>
-</html>
-
-```
-
 ![imgae.png](https://static001.geekbang.org/resource/image/76/1f/7641c75a80133e747aa2faae8f4c8d1f.png)
 
 
-备注：**JavaScript 文件的下载过程会阻塞 DOM 解析**, 执行影响会阻塞 DOM 解析。JavaScript 会阻塞 DOM 生成，而样式文件又会阻塞 JavaScript 的执行
 
-## 6. 为什么 css 动画比 js 高效？
-
-```
-.box {
-  will-change: transform, opacity;
-}
-```
-
-合成操作是在合成线程上完成的，这也就意味着在执行合成操作时，是不会影响到主线程执行的。这就是为什么经常主线程卡住了，但是 CSS 动画依然能执行的原因。
-
-### 7. 执行
+### 5. 执行
 
 ```
  client：客户端执行： node --experimental-modules request.mjs
@@ -116,7 +63,7 @@
 
 ```
 
-### 8. 参考
+### 6. 参考
 - 极客时间【李兵】[浏览器工作原理与实践](https://time.geekbang.org/column/intro/100033601?tab=catalog)
 
 
