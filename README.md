@@ -43,19 +43,19 @@
 
    ![image.png](https://static001.geekbang.org/resource/image/97/37/975fcbf7f83cc20d216f3d68a85d0f37.png)
 
-## 4. js 是如何影响 Dom 树的构建的？
+## 4. Dom树的构建的？
 
 利用栈思想：
 
 ![imgae.png](https://static001.geekbang.org/resource/image/8c/a5/8c7ba966cebb0050b81c0385ffb4f2a5.png)
 
-4.2 JavaScript 是如何影响 DOM 生成的?
+## 5. JavaScript 是如何影响 DOM 生成的?
 
 ![imgae.png](https://static001.geekbang.org/resource/image/76/1f/7641c75a80133e747aa2faae8f4c8d1f.png)
 
 
 
-### 5. 执行
+### 6. 执行
 
 ```
  client：客户端执行： node --experimental-modules request.mjs
@@ -63,7 +63,7 @@
 
 ```
 
-### 6. 参考
+### 7. 参考
 - 极客时间【李兵】[浏览器工作原理与实践](https://time.geekbang.org/column/intro/100033601?tab=catalog)
 
 
